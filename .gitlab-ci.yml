@@ -1,0 +1,12 @@
+stages:
+  - quality
+  - test
+  - build
+  - tag
+
+include: 
+  - gitlabci/quality.gitlab-ci.yml
+  - gitlabci/test.gitlab-ci.yml
+  - gitlabci/build.gitlab-ci.yml
+  - gitlabci/changelog_tag.gitlab-ci.yml
+

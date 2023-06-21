@@ -1,0 +1,12 @@
+trigger-webhook-or-whatever-we-decide:
+  stage: build
+  image: maven:3.8.6-eclipse-temurin-17-focal
+  script:
+    - ./mvnw compile -B
+  # keep compilation for test stage
+  artifacts:
+    paths:
+      - target
+  rules:
+  - if: ($CI_COMMIT_BRANCH == "main" && $CI_COMMIT_REF_NAME == "main")
+

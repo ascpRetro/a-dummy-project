@@ -1,0 +1,74 @@
+# You can override the included template(s) by including variable overrides
+# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
+# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/#customizing-settings
+# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
+# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
+# Note that environment variables can be set in several places
+# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
+
+ 
+#include:
+#  - template: Security/SAST.gitlab-ci.yml
+
+variables:
+  GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+
+cache:
+  paths:
+    - .m2/repository
+
+formatlint:
+  stage: quality
+  image: maven:3.8.6-eclipse-temurin-17-focal
+  variables:
+    # This will supress any download for dependencies and plugins or upload messages which would clutter the console log.
+    # `showDateTime` will show the passed time in milliseconds. You need to specify `--batch-mode` to make this work.
+    MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
+    # As of Maven 3.3.0 instead of this you may define these options in `.mvn/maven.config` so the same config is used
+    # when running from the command line.
+    # `installAtEnd` and `deployAtEnd` are only effective with recent version of the corresponding plugins.
+    MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+  script:
+    - mvn prettier:check -Dcode-quality -DskipTests -Dstyle.color=always
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+commitlint:
+  stage: quality
+  script: |-
+        git fetch --depth 50 origin main:main
+        git fetch --depth 50 origin $CI_COMMIT_REF_NAME:$CI_COMMIT_REF_NAME
+        if [[ "$(git rev-list --count main..)" == 0 ]]; then
+            echo "No commits found in branch"
+            exit 0
+        else
+          curl -L https://github.com/siderolabs/conform/releases/download/v0.1.0-alpha.27/conform-linux-amd64 -o conform
+          chmod a+x conform
+          ./conform enforce --base-branch=main
+        fi
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+lint:
+  stage: quality
+  image: oxsecurity/megalinter-java:v7
+  script: [ "true" ] # if script: ["true"] doesn't work, you may try ->  script: [ "/bin/bash /entrypoint.sh" ]
+  variables:
+    DEFAULT_WORKSPACE: $CI_PROJECT_DIR
+    #MEGALINTER_CONFIG: /configs/mega-linter.yml
+  artifacts:
+    when: always
+    paths:
+      - megalinter-reports
+    expire_in: 1 week
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+
+coverage:
+  stage: quality
+  image: maven:3.8.6-eclipse-temurin-17-focal
+  script:
+    - QUARKUS_JACOCO_EXCLUDES='**/entity/**/*, **/model/**/*/, **/*MapStructMapperImpl.class' mvn -q clean verify -Dcoverage -Djacoco.fail=true -Dstyle.color=always
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'

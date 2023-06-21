@@ -1,0 +1,33 @@
+changelog-tag:
+  image: ghcr.io/janderssonse/changelog_tag:latest
+  stage: tag
+  variables:
+    ASDF_DIR: "/app/.asdf"
+    ASDF_DATA_DIR: "/app/.asdf"
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "${SSH_TAG_BOT_PRIVATE_KEY}" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "${SSH_TAG_BOT_PRIVATE_KEY}" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - echo "${KNOWN_HOSTS}" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - cp /app/.tool-versions ~/
+  script:
+    ## Git configure
+    - git config --global user.email "${CI_GIT_USER_EMAIL}"
+    - git config --global user.name "${CI_GIT_USER_USERNAME}"
+    - git config --global gpg.format ssh
+    - git config --global commit.gpgsign true
+    - git config --global user.signingKey "${SSH_TAG_BOT_PUBLIC_KEY}"
+    - git config --global tag.gpgsign true
+
+    - git checkout main
+    - source '/app/.asdf/asdf.sh'
+    - /app/changelog_tag.sh
+    - git remote add ssh_origin "git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git"
+    - git push --follow-tags ssh_origin $CI_COMMIT_REF_NAME -o ci.skip
+  rules:
+    - if: ($CI_COMMIT_BRANCH == "main" && $CI_COMMIT_REF_NAME == "main")
+  when: manual 
