@@ -12,6 +12,18 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org) to
 ## [Unreleased]
 
 
+<a name="v0.0.2"></a>
+## [v0.0.2] - 2023-08-18
+### Bug Fixes
+- **README:** repair terrible typos
+
+### Code Refactoring
+- add super numbers
+
+### Features
+- change readme
+
+
 <a name="v0.0.1"></a>
 ## v0.0.1 - 2023-08-17
 ### Documentation
@@ -21,4 +33,5 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org) to
 - add an even better README
 
 
-[Unreleased]: https://gitlab-ci-token:64_ksyZsyhW2CaoUecaZLmy@gitlab.com/hanklank/a-dummy-project/compare/v0.0.1...HEAD
+[Unreleased]: https://gitlab-ci-token:64_wQgaKXSoGi1y5MtG4D8s@gitlab.com/hanklank/a-dummy-project/compare/v0.0.2...HEAD
+[v0.0.2]: https://gitlab-ci-token:64_wQgaKXSoGi1y5MtG4D8s@gitlab.com/hanklank/a-dummy-project/compare/v0.0.1...v0.0.2
