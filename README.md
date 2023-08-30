@@ -1,6 +1,6 @@
 # a-dummy-project
 r12
-This project usasdfes Quarkus, the Supersonic Subatomic Java Framework.
+asdfThis project usasdfes Quarkus, the Supersonic Subatomic Java Framework.
 
 asdfasfasdf
 iasdfasdfasdf
