@@ -5,7 +5,7 @@ asdfThis project usasdfes Quarkus, the Supersonic Subatomic Java Framework.
 asdfasfasdf
 iasdfasdfasdf
 If you want to learn more aboasdfut Quarkus, please visit its website: https://quarkus.io/ .
-
+asdf
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:
