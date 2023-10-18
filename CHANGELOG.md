@@ -12,6 +12,9 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org) to
 ## [Unreleased]
 
 
+<a name="v0.0.6"></a>
+## [v0.0.6] - 2023-10-18
+
 <a name="v0.0.5"></a>
 ## [v0.0.5] - 2023-09-01
 
@@ -45,8 +48,9 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org) to
 - add an even better README
 
 
-[Unreleased]: https://gitlab-ci-token:64_tDvsNaZftvwm2Js9PCFt@gitlab.com/hanklank/a-dummy-project/compare/v0.0.5...HEAD
-[v0.0.5]: https://gitlab-ci-token:64_tDvsNaZftvwm2Js9PCFt@gitlab.com/hanklank/a-dummy-project/compare/v0.0.4...v0.0.5
-[v0.0.4]: https://gitlab-ci-token:64_tDvsNaZftvwm2Js9PCFt@gitlab.com/hanklank/a-dummy-project/compare/v0.0.3...v0.0.4
-[v0.0.3]: https://gitlab-ci-token:64_tDvsNaZftvwm2Js9PCFt@gitlab.com/hanklank/a-dummy-project/compare/v0.0.2...v0.0.3
-[v0.0.2]: https://gitlab-ci-token:64_tDvsNaZftvwm2Js9PCFt@gitlab.com/hanklank/a-dummy-project/compare/v0.0.1...v0.0.2
+[Unreleased]: https://gitlab-ci-token:64_dYUXUjzxs6FNUhHf96i2@gitlab.com/hanklank/a-dummy-project/compare/v0.0.6...HEAD
+[v0.0.6]: https://gitlab-ci-token:64_dYUXUjzxs6FNUhHf96i2@gitlab.com/hanklank/a-dummy-project/compare/v0.0.5...v0.0.6
+[v0.0.5]: https://gitlab-ci-token:64_dYUXUjzxs6FNUhHf96i2@gitlab.com/hanklank/a-dummy-project/compare/v0.0.4...v0.0.5
+[v0.0.4]: https://gitlab-ci-token:64_dYUXUjzxs6FNUhHf96i2@gitlab.com/hanklank/a-dummy-project/compare/v0.0.3...v0.0.4
+[v0.0.3]: https://gitlab-ci-token:64_dYUXUjzxs6FNUhHf96i2@gitlab.com/hanklank/a-dummy-project/compare/v0.0.2...v0.0.3
+[v0.0.2]: https://gitlab-ci-token:64_dYUXUjzxs6FNUhHf96i2@gitlab.com/hanklank/a-dummy-project/compare/v0.0.1...v0.0.2
